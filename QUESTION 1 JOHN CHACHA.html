@@ -1,0 +1,117 @@
+<div id="results_div"></div>
+<script>
+
+var main_value = [];
+
+var main_value_addyearOne = [];
+  //after reading the question well i dicided to category members into two 1.ACTIVE and 2.REGISTERED
+  //then am using array to store each of those members details and push them to another array of that year
+  //then we push again those data to the main array of all the years datas.
+
+	//-------2019 members data -------
+	var cookie_value_addyearOne = []; //to store both registered and active members
+	var registerdmemberyearOne = {}; //to store the 2019 registered members
+	var activememberyearOne = {};    //to store the 2019 active members
+
+    //starting with 2019 registered members
+	registerdmemberyearOne["value"] = 10;
+	registerdmemberyearOne["name"] = 'Number of members registerd';
+	registerdmemberyearOne["code"] = 'MEMBER_REGISTERED';
+	registerdmemberyearOne["reportingRate"] = 10;
+	
+	//then 2019 active members
+	activememberyearOne["value"] = 9;
+	activememberyearOne["name"] = 'Number of active members';
+	activememberyearOne["code"] = 'ACTIVE_MEMBER';
+	activememberyearOne["reportingRate"] = 50;
+	
+	//push those data in year 2019 array
+	cookie_value_addyearOne.push(registerdmemberyearOne,activememberyearOne);
+
+	//add those data 2019 with the actual year number 2019
+	main_value_addyearOne.push(2019,cookie_value_addyearOne);
+	//------------------end 2019
+
+	//then the same proceudures from 2019, applies to the other years of 2020 and 2021
+
+	//---------------2020
+	var main_value_addyearTwo = [];
+	var cookie_value_addyearTwo = [];
+
+	var registerdmemberyearTwo = {};
+	var activememberyearTwo = {};
+
+	registerdmemberyearTwo["value"] = 30;
+	registerdmemberyearTwo["name"] = 'Number of members registerd';
+	registerdmemberyearTwo["code"] = 'MEMBER_REGISTERED';
+	registerdmemberyearTwo["reportingRate"] = 70;
+	
+	activememberyearTwo["value"] = 25;
+	activememberyearTwo["name"] = 'Number of active members';
+	activememberyearTwo["code"] = 'ACTIVE_MEMBER';
+	activememberyearTwo["reportingRate"] = 90;
+	
+	cookie_value_addyearTwo.push(registerdmemberyearTwo,activememberyearTwo);
+	main_value_addyearTwo.push(2020,cookie_value_addyearTwo);
+	//------------------end 2020
+
+
+	//---------------2021
+	var main_value_addyearThree = [];
+	var cookie_value_addyearThree = [];
+	var registerdmemberyearThree = {};
+	var activememberyearThree = {};
+	registerdmemberyearThree["value"] = 56;
+	registerdmemberyearThree["name"] = 'Number of members registerd';
+	registerdmemberyearThree["code"] = 'MEMBER_REGISTERED';
+	registerdmemberyearThree["reportingRate"] = 70;
+	
+	activememberyearThree["value"] = 43;
+	activememberyearThree["name"] = 'Number of active members';
+	activememberyearThree["code"] = 'ACTIVE_MEMBER';
+	activememberyearThree["reportingRate"] = 20;
+	
+	cookie_value_addyearThree.push(registerdmemberyearThree,activememberyearThree);
+	main_value_addyearThree.push(2021,cookie_value_addyearThree);
+	//------------------end 2021
+	main_value.push(main_value_addyearOne,main_value_addyearTwo,main_value_addyearThree);
+	
+
+	//-----------------results
+	var greatermemberregistered_value = []; //to push final processing data for registrered members
+	var greateractivemember_value = [];  //to push final processing data for active members
+
+	//lets check from the main values which contains years and values of those years
+	//the x values in main loop is for years when x=0 means 2019 and so on
+	for(var x=0;x<main_value.length;x++){
+		if(main_value[x][1][0]['code'] == 'MEMBER_REGISTERED' && main_value[x][1][0]['reportingRate'] >= 50){
+			
+			greatermemberregistered_value.push(main_value[x][1][0]['value']);
+		}
+		if(main_value[x][1][1]['code'] == 'ACTIVE_MEMBER' && main_value[x][1][1]['reportingRate'] >= 50){
+			
+			greateractivemember_value.push(main_value[x][1][1]['value']);
+		}
+	}
+	
+	//after pushing datas with >=50 reportingRate then let find avarage for both active and registered members for final out 
+
+	var activemember_avg = (greateractivemember_value.reduce((a, b) => a + b, 0)/greateractivemember_value.length)
+	var regimember_avg = (greatermemberregistered_value.reduce((a, b) => a + b, 0)/greatermemberregistered_value.length)
+
+	var result_value = []; //to store/push final values for output
+	var resultsregisterdmember = {}; //results for registered members
+	var resultsactivemember = {}; //results for active members
+	resultsregisterdmember["value"] = regimember_avg;
+	resultsregisterdmember["name"] = 'Number of members registerd';
+	resultsregisterdmember["code"] = 'MEMBER_REGISTERED';
+	
+	resultsactivemember["value"] = activemember_avg;
+	resultsactivemember["name"] = 'Number of active members';
+	resultsactivemember["code"] = 'ACTIVE_MEMBER';
+	result_value.push(resultsregisterdmember,resultsactivemember); //we push both members values for final output
+
+	//lets display the final output to the div about with id of results_div and display them in json array.
+	document.getElementById('results_div').innerHTML = ('<pre>'+JSON.stringify(result_value)+'</pre>')
+	//alert(JSON.stringify(result_value))
+</script>
